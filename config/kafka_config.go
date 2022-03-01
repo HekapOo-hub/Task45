@@ -6,7 +6,7 @@ import (
 )
 
 type KafkaConfig struct {
-	KafkaURL string `env:"kafkaURL" envDefault:"localhost:29092"`
+	KafkaURL string `env:"kafkaURL" envDefault:"broker:9092"`
 	Topic    string `env:"topic" envDefault:"topic1"`
 	GroupID  string `env:"GroupID" envDefault:"mongo-group"`
 }
