@@ -27,6 +27,8 @@ func NewConsumerService(broker string, topics []string, group string, handler Gr
 	go func() {
 		for {
 			err := client.Consume(ctx, topics, handler)
+			log.Info("sleeeeeeeeeping")
+			time.Sleep(time.Second * 20)
 			if err != nil {
 				log.Warnf("consume service error %v", err)
 				if err == sarama.ErrClosedConsumerGroup {
@@ -42,7 +44,7 @@ func NewConsumerService(broker string, topics []string, group string, handler Gr
 			handler.Reset()
 		}
 	}()
-
+	log.Info("handler %v", handler)
 	handler.WaitReady() // wait till the consumer has been set up
 
 	return &Service{
@@ -59,7 +61,7 @@ func StartBatchConsumer(cfg config.KafkaConfig) (*Service, error) {
 
 	var start = time.Now()
 	handler, err := NewBatchConsumerGroupHandler(&BatchConsumerConfig{
-		MaxBufSize: 200000,
+		MaxBufSize: 40000,
 		Callback: func(messages []*SessionMessage) error {
 			for i := range messages {
 				if _, err := model.DecodeMessage(messages[i].Message.Value); err == nil {

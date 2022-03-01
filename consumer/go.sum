@@ -1,8 +1,12 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/HekapOo-hub/Kafka/config v0.0.0-20220301145937-097cf9aa9df4 h1:IhaIiGXZN4QEbHD3mmjl7smLpapQZZf2OTEo4TXHRhs=
 github.com/HekapOo-hub/Kafka/config v0.0.0-20220301145937-097cf9aa9df4/go.mod h1:nzaN2M55ErbXTkQQ4U1uFOi3eAevdK810iyBlq0UL4U=
+github.com/HekapOo-hub/Kafka/config v0.0.0-20220301150359-01364d981a94 h1:MHoQ6fCsgUWRyXs99yffuSZPl0fQxzPq3XFjDO7+/VY=
+github.com/HekapOo-hub/Kafka/config v0.0.0-20220301150359-01364d981a94/go.mod h1:nzaN2M55ErbXTkQQ4U1uFOi3eAevdK810iyBlq0UL4U=
 github.com/HekapOo-hub/Kafka/model v0.0.0-20220301145937-097cf9aa9df4 h1:hI1CcqcseS2SishMp+owt9PItmav5Uk187qp/Jx6e3I=
 github.com/HekapOo-hub/Kafka/model v0.0.0-20220301145937-097cf9aa9df4/go.mod h1:gTIhYgkQXK9B3LTmVDx0hXa75k7VNr/EXXJdp9wYY7o=
+github.com/HekapOo-hub/Kafka/model v0.0.0-20220301150359-01364d981a94 h1:cQv1cwXpi8IntW1+9AkW2ICkMp03g10x4iQZACO5zvs=
+github.com/HekapOo-hub/Kafka/model v0.0.0-20220301150359-01364d981a94/go.mod h1:gTIhYgkQXK9B3LTmVDx0hXa75k7VNr/EXXJdp9wYY7o=
 github.com/Shopify/sarama v1.32.0 h1:P+RUjEaRU0GMMbYexGMDyrMkLhbbBVUVISDywi+IlFU=
 github.com/Shopify/sarama v1.32.0/go.mod h1:+EmJJKZWVT/faR9RcOxJerP+LId4iWdQPBGLy1Y1Njs=
 github.com/Shopify/toxiproxy/v2 v2.3.0 h1:62YkpiP4bzdhKMH+6uC5E95y608k3zDwdzuBMsnn3uQ=

@@ -18,7 +18,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
-      - "29092:9092"
+      - "29092:29092"
     depends_on:
       - zookeeper
   postgres:
@@ -39,5 +39,7 @@ services:
     image: consumer
     environment:
       POSTGRES_PORT: "5432"
+      POSTGRES_HOST: "postgres"
       kafkaURL: broker:9092
       topic: topic1
+      GroupID: mongo-group

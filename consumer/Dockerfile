@@ -1,6 +1,5 @@
 FROM golang AS builder
 
-RUN apk update && apk add --no-cache git
 
 WORKDIR /app
 
@@ -10,7 +9,7 @@ RUN go mod download
 
 
 # Build the binary.
-RUN  go build cmd/main
+RUN go build cmd/main.go
 
 #####################################
 #   STEP 2 build a small image      #
