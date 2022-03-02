@@ -7,7 +7,6 @@ import (
 	"github.com/HekapOo-hub/Kafka/model"
 	"github.com/Shopify/sarama"
 	log "github.com/sirupsen/logrus"
-	"time"
 )
 
 type Service struct {
@@ -27,8 +26,6 @@ func NewConsumerService(broker string, topics []string, group string, handler Gr
 	go func() {
 		for {
 			err := client.Consume(ctx, topics, handler)
-			log.Info("sleeeeeeeeeping")
-			time.Sleep(time.Second * 20)
 			if err != nil {
 				log.Warnf("consume service error %v", err)
 				if err == sarama.ErrClosedConsumerGroup {
@@ -59,9 +56,9 @@ func (s *Service) Close() error {
 func StartBatchConsumer(cfg config.KafkaConfig) (*Service, error) {
 	var count int
 
-	var start = time.Now()
+	//var start = time.Now()
 	handler, err := NewBatchConsumerGroupHandler(&BatchConsumerConfig{
-		MaxBufSize: 40000,
+		MaxBufSize: 2000,
 		Callback: func(messages []*SessionMessage) error {
 			for i := range messages {
 				if _, err := model.DecodeMessage(messages[i].Message.Value); err == nil {
@@ -70,7 +67,7 @@ func StartBatchConsumer(cfg config.KafkaConfig) (*Service, error) {
 			}
 			count += len(messages)
 			if count%2000 == 0 {
-				fmt.Printf("batch consumer consumed %d messages at speed %.2f/s\n", count, float64(count)/time.Since(start).Seconds())
+				//log.Infof("batch consumer consumed %d messages at speed %.2f/s", count, float64(count)/time.Since(start).Seconds())
 			}
 			return nil
 		},

@@ -23,7 +23,7 @@ func main() {
 			return
 		}
 	}
-	time.Sleep(time.Minute)
+	time.Sleep(50000 * time.Second)
 	err = service.Close()
 	if err != nil {
 		log.Warnf("closing consumer error %v", err)

@@ -37,25 +37,31 @@ func NewPostgresRepository() (*PostgresRepository, error) {
 		log.Warnf("creating postgres connection pool error %v", err)
 		return nil, fmt.Errorf("creating postgres connection pool error %w", err)
 	}
+	_, err = pool.Prepare("create", "INSERT INTO messages (count) VALUES ($1)")
+	if err != nil {
+		return nil, fmt.Errorf("new postgres repository %w", err)
+	}
+	_, err = pool.Prepare("delete", "DELETE FROM messages WHERE count=$1")
+	if err != nil {
+		return nil, fmt.Errorf("new postgres repository %w", err)
+	}
+
 	return &PostgresRepository{pool: pool}, nil
 }
 
 func (r *PostgresRepository) Add(message model.Message) error {
 	if r.batch == nil {
-		tx, err := r.pool.BeginEx(context.Background(), nil)
+		var err error
+		r.tx, err = r.pool.BeginEx(context.Background(), nil)
 		if err != nil {
 			return fmt.Errorf("postgres transaction %w", err)
 		}
-		r.batch = tx.BeginBatch()
+
+		r.batch = r.tx.BeginBatch()
 	}
-	var query string
-	switch message.Command {
-	case "create":
-		query = "insert into messages (value) values ($1)"
-	case "delete":
-		query = "delete from messages where value=$1"
-	}
-	r.batch.Queue(query, []interface{}{message.Value}, nil, nil)
+
+	r.batch.Queue(message.Command, []interface{}{message.Value}, nil, nil)
+
 	return nil
 }
 

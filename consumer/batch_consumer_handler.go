@@ -76,7 +76,7 @@ func (h *batchConsumerGroupHandler) Setup(sarama.ConsumerGroupSession) error {
 
 // Cleanup is run at the end of a session, once all ConsumeClaim goroutines have exited
 func (h *batchConsumerGroupHandler) Cleanup(sarama.ConsumerGroupSession) error {
-
+	log.Infof("tx %v", h.repository.tx)
 	err := h.repository.tx.Commit()
 	if err != nil {
 		return fmt.Errorf("close tx %w", err)
@@ -90,14 +90,7 @@ func (h *batchConsumerGroupHandler) WaitReady() {
 }
 
 func (h *batchConsumerGroupHandler) Reset() {
-	err := h.repository.SendBatch()
-	if err != nil {
-		log.Warnf("reset handler %v", err)
-	}
-	err = h.repository.OpenTx()
-	if err != nil {
-		log.Warnf("reset handler %v", err)
-	}
+
 	h.ready = make(chan bool, 0)
 	return
 }
@@ -122,7 +115,7 @@ func (h *batchConsumerGroupHandler) insertMessage(msg *SessionMessage) {
 func (h *batchConsumerGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
 
 	claimMsgChan := claim.Messages()
-
+	var count int
 	for {
 		message, ok := <-claimMsgChan
 		if ok {
@@ -138,6 +131,18 @@ func (h *batchConsumerGroupHandler) ConsumeClaim(session sarama.ConsumerGroupSes
 			err = h.repository.Add(*msg)
 			if err != nil {
 				log.Warnf("consume claim %v", err)
+			}
+			count++
+			if count%2000 == 0 {
+				count = 0
+				err := h.repository.SendBatch()
+				if err != nil {
+					log.Warnf("consume claim handler %v", err)
+				}
+				err = h.repository.OpenTx()
+				if err != nil {
+					log.Warnf("consume claim %v", err)
+				}
 			}
 		} else {
 			return nil
