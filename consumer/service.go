@@ -7,6 +7,7 @@ import (
 	"github.com/HekapOo-hub/Kafka/model"
 	"github.com/Shopify/sarama"
 	log "github.com/sirupsen/logrus"
+	"time"
 )
 
 type Service struct {
@@ -56,7 +57,7 @@ func (s *Service) Close() error {
 func StartBatchConsumer(cfg config.KafkaConfig) (*Service, error) {
 	var count int
 
-	//var start = time.Now()
+	var start = time.Now()
 	handler, err := NewBatchConsumerGroupHandler(&BatchConsumerConfig{
 		MaxBufSize: 2000,
 		Callback: func(messages []*SessionMessage) error {
@@ -67,7 +68,7 @@ func StartBatchConsumer(cfg config.KafkaConfig) (*Service, error) {
 			}
 			count += len(messages)
 			if count%2000 == 0 {
-				//log.Infof("batch consumer consumed %d messages at speed %.2f/s", count, float64(count)/time.Since(start).Seconds())
+				log.Infof("batch consumer consumed %d messages at speed %.2f/s", count, float64(count)/time.Since(start).Seconds())
 			}
 			return nil
 		},

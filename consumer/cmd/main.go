@@ -1,15 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"github.com/HekapOo-hub/Kafka/config"
 	"github.com/HekapOo-hub/Kafka/consumer"
-	"github.com/Shopify/sarama"
 	log "github.com/sirupsen/logrus"
-	"time"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
-	sarama.Logger = log.New()
 	cfg, err := config.GetKafkaConfig()
 	if err != nil {
 		log.Warnf("couldn't get kafka config %v", err)
@@ -22,9 +23,14 @@ func main() {
 			return
 		}
 	}
-	time.Sleep(50000 * time.Second)
-	err = service.Close()
-	if err != nil {
-		log.Warnf("closing consumer error %v", err)
-	}
+
+	defer func() {
+		err = service.Close()
+		if err != nil {
+			log.Warnf("closing consumer error %v", err)
+		}
+	}()
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	fmt.Println("received signal", <-c)
 }
