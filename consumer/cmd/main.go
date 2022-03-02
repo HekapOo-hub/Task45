@@ -15,7 +15,6 @@ func main() {
 		log.Warnf("couldn't get kafka config %v", err)
 		return
 	}
-	log.Warnf("url %s", cfg.KafkaURL)
 	service, err := consumer.StartBatchConsumer(*cfg)
 	if err != nil {
 		if err != nil {

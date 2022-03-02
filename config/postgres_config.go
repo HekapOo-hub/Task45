@@ -7,7 +7,7 @@ import (
 
 type PostgresConfig struct {
 	UserName string `env:"POSTGRES_USER" envDefault:"vitalijprokopenya"`
-	Host     string `env:"POSTGRES_HOST" envDefault:"localhost"`
+	Host     string `env:"POSTGRES_HOST" envDefault:"postgres"`
 	Port     string `env:"POSTGRES_PORT" envDefault:"5431"`
 	Password string `env:"POSTGRES_PASSWORD" envDefault:"1234"`
 	DBName   string `env:"DB_NAME" envDefault:"vitalijprokopenya"`

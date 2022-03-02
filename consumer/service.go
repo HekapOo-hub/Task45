@@ -41,7 +41,7 @@ func NewConsumerService(broker string, topics []string, group string, handler Gr
 			handler.Reset()
 		}
 	}()
-	log.Info("handler %v", handler)
+	log.Infof("handler %v", handler)
 	handler.WaitReady() // wait till the consumer has been set up
 
 	return &Service{
@@ -72,6 +72,9 @@ func StartBatchConsumer(cfg config.KafkaConfig) (*Service, error) {
 			return nil
 		},
 	})
+	if err != nil {
+		return nil, err
+	}
 	consumer, err := NewConsumerService(cfg.KafkaURL, []string{cfg.Topic}, cfg.GroupID, handler)
 	if err != nil {
 		return nil, fmt.Errorf("creating new consumer service error %w", err)

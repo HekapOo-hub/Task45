@@ -21,6 +21,7 @@ func NewPostgresRepository() (*PostgresRepository, error) {
 		log.Warnf("postgres config error: %v", err)
 		return nil, fmt.Errorf("new postgres repository func %v", err)
 	}
+	log.Infof("p cfg %v", cfg)
 	connConfig := pgx.ConnConfig{
 		Host:     cfg.Host,
 		Database: cfg.DBName,

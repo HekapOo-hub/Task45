@@ -26,7 +26,8 @@ services:
     environment:
       POSTGRES_USER: "vitalijprokopenya"
       POSTGRES_PASSWORD: "1234"
-
+    expose:
+      - 5432
     ports:
       - "5431:5432"
   producer:
