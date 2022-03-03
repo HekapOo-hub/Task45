@@ -9,7 +9,7 @@ RUN go mod download
 
 
 # Build the binary.
-RUN go build cmd/main.go
+RUN go build consumer_main.go
 
 #####################################
 #   STEP 2 build a small image      #

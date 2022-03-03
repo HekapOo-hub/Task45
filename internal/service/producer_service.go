@@ -1,8 +1,8 @@
-package producer
+package service
 
 import (
 	"encoding/json"
-	"github.com/HekapOo-hub/Kafka/model"
+	"github.com/HekapOo-hub/Task45/internal/model"
 	"github.com/Shopify/sarama"
 	log "github.com/sirupsen/logrus"
 	"time"

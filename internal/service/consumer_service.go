@@ -1,10 +1,11 @@
-package consumer
+package service
 
 import (
 	"context"
 	"fmt"
-	"github.com/HekapOo-hub/Kafka/config"
-	"github.com/HekapOo-hub/Kafka/model"
+	"github.com/HekapOo-hub/Task45/internal/config"
+	"github.com/HekapOo-hub/Task45/internal/consumer_handler"
+	"github.com/HekapOo-hub/Task45/internal/model"
 	"github.com/Shopify/sarama"
 	log "github.com/sirupsen/logrus"
 	"time"
@@ -14,7 +15,7 @@ type Service struct {
 	cg sarama.ConsumerGroup
 }
 
-func NewConsumerService(broker string, topics []string, group string, handler GroupHandler) (*Service, error) {
+func NewConsumerService(broker string, topics []string, group string, handler consumer_handler.GroupHandler) (*Service, error) {
 	ctx := context.Background()
 	cfg := sarama.NewConfig()
 	cfg.Version = sarama.V0_10_2_0
@@ -58,9 +59,9 @@ func StartBatchConsumer(cfg config.KafkaConfig) (*Service, error) {
 	var count int
 
 	var start = time.Now()
-	handler, err := NewBatchConsumerGroupHandler(&BatchConsumerConfig{
+	handler, err := consumer_handler.NewBatchConsumerGroupHandler(&consumer_handler.BatchConsumerConfig{
 		MaxBufSize: 2000,
-		Callback: func(messages []*SessionMessage) error {
+		Callback: func(messages []*consumer_handler.SessionMessage) error {
 			for i := range messages {
 				if _, err := model.DecodeMessage(messages[i].Message.Value); err == nil {
 					messages[i].Session.MarkMessage(messages[i].Message, "")

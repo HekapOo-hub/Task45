@@ -1,8 +1,9 @@
-package consumer
+package consumer_hanlder
 
 import (
 	"fmt"
-	"github.com/HekapOo-hub/Kafka/model"
+	"github.com/HekapOo-hub/Task45/internal/model"
+	"github.com/HekapOo-hub/Task45/internal/repository"
 	"github.com/Shopify/sarama"
 	log "github.com/sirupsen/logrus"
 	"sync"
@@ -26,7 +27,7 @@ type SessionMessage struct {
 }
 
 type batchConsumerGroupHandler struct {
-	repository *PostgresRepository
+	repository *repository.PostgresRepository
 
 	cfg *BatchConsumerConfig
 
@@ -44,7 +45,7 @@ type batchConsumerGroupHandler struct {
 }
 
 func NewBatchConsumerGroupHandler(cfg *BatchConsumerConfig) (GroupHandler, error) {
-	repo, err := NewPostgresRepository()
+	repo, err := repository.NewPostgresRepository()
 	if err != nil {
 		return nil, fmt.Errorf("new batch consumer group handler %w", err)
 	}

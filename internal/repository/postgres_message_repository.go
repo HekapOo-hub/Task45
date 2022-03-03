@@ -1,10 +1,10 @@
-package consumer
+package repository
 
 import (
 	"context"
 	"fmt"
-	"github.com/HekapOo-hub/Kafka/config"
-	"github.com/HekapOo-hub/Kafka/model"
+	"github.com/HekapOo-hub/Task45/internal/config"
+	"github.com/HekapOo-hub/Task45/internal/model"
 	"github.com/jackc/pgx"
 	log "github.com/sirupsen/logrus"
 )
