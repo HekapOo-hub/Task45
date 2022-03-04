@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/HekapOo-hub/Kafka/config"
-	"github.com/HekapOo-hub/Kafka/producer"
+	"github.com/HekapOo-hub/Task45/internal/config"
+	"github.com/HekapOo-hub/Task45/internal/service"
 	log "github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
@@ -15,7 +15,7 @@ func main() {
 		log.Warnf("couldn't get kafka config %v", err)
 		return
 	}
-	service, err := producer.NewSendingService(cfg.KafkaURL)
+	service, err := service.NewSendingService(cfg.KafkaURL)
 	if err != nil {
 		log.Warnf("creating service error %v", err)
 		return

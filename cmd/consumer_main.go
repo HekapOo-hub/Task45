@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/HekapOo-hub/Kafka/config"
-	"github.com/HekapOo-hub/Kafka/consumer"
+	"github.com/HekapOo-hub/Task45/internal/config"
+	"github.com/HekapOo-hub/Task45/internal/service"
+
 	log "github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
@@ -16,7 +17,7 @@ func main() {
 		log.Warnf("couldn't get kafka config %v", err)
 		return
 	}
-	service, err := consumer.StartBatchConsumer(*cfg)
+	service, err := service.StartBatchConsumer(*cfg)
 	if err != nil {
 		if err != nil {
 			log.Warnf("start batch consumer %v", err)
