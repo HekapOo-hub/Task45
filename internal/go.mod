@@ -1,4 +1,4 @@
-module github.com/HekapOo-hub/Task45
+module github.com/HekapOo-hub/Task45/internal
 
 go 1.17
 

@@ -1,4 +1,4 @@
-package consumer_hanlder
+package consumer_handler
 
 import (
 	"fmt"
@@ -77,11 +77,6 @@ func (h *batchConsumerGroupHandler) Setup(sarama.ConsumerGroupSession) error {
 
 // Cleanup is run at the end of a session, once all ConsumeClaim goroutines have exited
 func (h *batchConsumerGroupHandler) Cleanup(sarama.ConsumerGroupSession) error {
-	log.Infof("tx %v", h.repository.tx)
-	err := h.repository.tx.Commit()
-	if err != nil {
-		return fmt.Errorf("close tx %w", err)
-	}
 	return nil
 }
 
